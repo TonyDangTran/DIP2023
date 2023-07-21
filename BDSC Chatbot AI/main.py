@@ -1,14 +1,17 @@
+#importations
 from tkinter import*
 import tkinter as tk
 from tkinter import simpledialog
-import openai
+import openai #openai module allows me to run a chatbot.
 
+
+#setting up functions
 def query(prompt):
-    openai.api_key = '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'
+    openai.api_key = '' #Openai API key
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo", 
         messages=prompt,
-        temperature=1,
+        temperature=1, #settings for the chatbot
         max_tokens=250, 
         top_p=1,
         frequency_penalty=0,
@@ -16,50 +19,44 @@ def query(prompt):
     )
     return response
 
-def send(event=None):
+def send(event=None): #function that runs when you click the button widget
     text = entry2.get()
-    prompt.append({'role': 'user', 'content': text})
+    prompt.append({'role': 'user', 'content': text}) #uses dictionary for chatbot
     response = query(prompt)
     message_content = response['choices'][0]['message']['content']
     prompt.append({'role': 'assistant', 'content': message_content})
     
     text_widget.config(state="normal")
-    text_widget.insert("end",f"{display_name}: " + "\n" + text +"\n", "right")
-    text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left")
+    text_widget.insert("end",f"{display_name}: " + "\n" + text +"\n", "right") #user chat
+    text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left") #chatbot chat
     text_widget.tag_configure("right",justify="right")
     text_widget.tag_configure("left", justify="left")
     text_widget.config(state="disabled")
     entry2.delete(0,"end")
  
-def get_name():
+def get_name(): #popup window that asks for user input for name
     name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
     return name.capitalize()
 
-display_name = get_name()
-prompt=[{'role': 'system', 'content': 'how may I help you?'}]
+display_name = get_name() #runs get_name function before the GUI opens. 
+prompt=[{'role': 'system', 'content': 'how may I help you?'}] #this will be where the chatbot asks the user for their first question. Currently not implemented. 
 
-window = Tk()
+#GUI
+window = Tk() 
 window.geometry("500x750")
 window.title("BDSC Chatbot AI")
 window.resizable(False, False)
 
-canvas = tk.Canvas(window, width=50, height=50,bg="#89c9ec")
+canvas = tk.Canvas(window, width=50, height=50,bg="#89c9ec") #canvas for structured graphics. More usage later on. 
 canvas.pack()
 
-entry1 = tk.Text(window,wrap="word",state="disabled",bg="#89c9ec",padx=5,pady=5)
+entry1 = tk.Text(window,wrap="word",state="disabled",bg="#89c9ec",padx=5,pady=5) #Big entry box for where the text from both chatbot and user will exist.
 entry1.place(x=6,y=5,width=493,height=700)
 
 
-entry2 = tk.Entry(window)
+entry2 = tk.Entry(window) #Small 
 entry2.place(x=5,y=720,width=420,height=20)
 entry2.bind("<Return>", send)
-
-#def write_to_csv(chat):
-    #with open("emprecords.csv","a", newline = "") as csvfile:
-        #writer = csv.writer(csvfile)
-        #writer.writerow([[chat.entry2]])
-
-#canvas.create_window(100,100,window=entry)
 
 
 button1 = tk.Button(window, text='Send Msg', command=send)
@@ -72,12 +69,6 @@ text_widget.place(x=7, y=6)
 scrollbar = Scrollbar(window, command=text_widget.yview)
 text_widget['yscrollcommand'] = scrollbar.set
 scrollbar.place(x=481, y=6, height = 688)
-
-
-
-
-
-#canvas.create_window(5,25,window=button1)
 
 frame = Frame(window)
 frame.pack()
