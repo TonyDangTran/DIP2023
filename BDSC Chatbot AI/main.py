@@ -3,11 +3,11 @@ from tkinter import*
 import tkinter as tk
 from tkinter import simpledialog
 import openai #openai module allows me to run a chatbot.
-
+import key
 
 #setting up functions
 def query(prompt):
-    openai.api_key = '' #Openai API key
+    openai.api_key = key.api_key #Openai API key
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", 
         messages=prompt,
