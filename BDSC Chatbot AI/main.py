@@ -54,24 +54,24 @@ entry1 = tk.Text(window,wrap="word",state="disabled",bg="#89c9ec",padx=5,pady=5)
 entry1.place(x=6,y=5,width=493,height=700)
 
 
-entry2 = tk.Entry(window) #Small 
+entry2 = tk.Entry(window) #Small textbox for user to input
 entry2.place(x=5,y=720,width=420,height=20)
 entry2.bind("<Return>", send)
 
 
-button1 = tk.Button(window, text='Send Msg', command=send)
+button1 = tk.Button(window, text='Send Msg', command=send) #send message button
 button1.place(anchor="se", relx=0.99, rely=0.99)
 
-text_widget = tk.Text(window, height=36, width=59,font="calibri",state="disabled")
+text_widget = tk.Text(window, height=36, width=59,font="calibri",state="disabled") #text widget 
 text_widget.place(x=7, y=6)
  
 
-scrollbar = Scrollbar(window, command=text_widget.yview)
+scrollbar = Scrollbar(window, command=text_widget.yview) #scrollbar
 text_widget['yscrollcommand'] = scrollbar.set
 scrollbar.place(x=481, y=6, height = 688)
 
 frame = Frame(window)
-frame.pack()
+frame.pack() #packing 
 window.configure(background="#5f0137")
 window.mainloop()
 
