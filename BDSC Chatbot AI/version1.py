@@ -27,18 +27,13 @@ def send(event=None): #function that runs when you click the button widget
     prompt.append({'role': 'assistant', 'content': message_content})
     
     text_widget.config(state="normal")
-    text_widget.insert("end",f"{display_name}: " + "\n" + text +"\n", "right") #user chat
-    text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left") #chatbot chat
+    text_widget.insert("end","You: "+ text +"\n", "right") #user chat
+    text_widget.insert("end", "Chatbot: " + message_content + "\n", "left") #chatbot chat
     text_widget.tag_configure("right",justify="right")
     text_widget.tag_configure("left", justify="left")
     text_widget.config(state="disabled")
     entry2.delete(0,"end")
  
-def get_name(): #popup window that asks for user input for name
-    name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
-    return name.capitalize()
-
-display_name = get_name() #runs get_name function before the GUI opens. 
 prompt=[{'role': 'system', 'content': 'how may I help you?'}] #this will be where the chatbot asks the user for their first question. Currently not implemented. 
 
 #GUI
