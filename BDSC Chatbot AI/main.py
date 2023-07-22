@@ -9,7 +9,7 @@ import key
 
 class Chatbot: #encapsulating
     def __init__(self):
-        self.prompt = [{'role': 'system', 'content': 'how may i help you?'}]
+        self.prompt = [{'role': 'system', 'content': 'Hi! My name\'s BDSC Assistant, a chatbot designed to help and communicate with students, parents, teachers and more to help guide their way to find information on the Botany Downs Secondary College (BDSC) Website. How may I help you?'}]
         self.display_name = self.get_name()
         self.create_gui()
 
@@ -25,25 +25,43 @@ class Chatbot: #encapsulating
             presence_penalty=0,
         )
         return response
+    
+    def error(self):
+        error_message = "Please enter a valid message."
+        self.text_widget.config(state='normal')
+        self.text_widget.insert("end","BDSC Assistant:" + "\n" + error_message + "\n", "left")
+        self.text_widget.tag_configure("left",justify="left")
+        self.text_widget.config(state="disabled")
+        self.entry2.delete(0,"end")
+        
 
     def send(self, event=None): #function that runs when you click the button widget
         text = self.entry2.get()
-        self.prompt.append({'role': 'user', 'content': text}) #uses dictionary for chatbot
-        response = self.query(self.prompt)
-        message_content = response['choices'][0]['message']['content']
-        self.prompt.append({'role': 'assistant', 'content': message_content})
-        
-        self.text_widget.config(state="normal")
-        self.text_widget.insert("end",f"{self.display_name}: " + "\n" + text +"\n", "right") #user chat
-        self.text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left") #chatbot chat
-        self.text_widget.tag_configure("right",justify="right")
-        self.text_widget.tag_configure("left", justify="left")
-        self.text_widget.config(state="disabled")
-        self.entry2.delete(0,"end")
+
+        if not text:
+            Chatbot.error(self)
+        elif len(text) == 1:
+            Chatbot.error(self)
+        else:
+            self.prompt.append({'role': 'user', 'content': text}) #uses dictionary for chatbot
+            response = self.query(self.prompt)
+            message_content = response['choices'][0]['message']['content']
+            self.prompt.append({'role': 'assistant', 'content': message_content})
+            
+            self.text_widget.config(state="normal")
+            self.text_widget.insert("end",f"{self.display_name}: " + "\n" + text +"\n", "right") #user chat
+            self.text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left") #chatbot chat
+            self.text_widget.tag_configure("right",justify="right")
+            self.text_widget.tag_configure("left", justify="left")
+            self.text_widget.config(state="disabled")
+            self.entry2.delete(0,"end")
     
     def get_name(self): #popup window that asks for user input for name
-        name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
-        return name.capitalize()
+       while True:
+            name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
+            if name is not None and name.strip() != "":
+                return name.capitalize()
+    
 
 
     def create_gui(self):#GUI
@@ -69,6 +87,11 @@ class Chatbot: #encapsulating
 
         self.text_widget = tk.Text(self.window, height=36, width=59,font="calibri",state="disabled") #text widget 
         self.text_widget.place(x=7, y=6)
+        intro_message = self.prompt[0]['content']
+        self.text_widget.config(state="normal",wrap="word")
+        self.text_widget.insert("end", "BDSC Assistant: " + "\n" + intro_message + "\n", "left")
+        self.text_widget.tag_configure("left", justify="left")
+        self.text_widget.config(state="disabled")
         
 
         scrollbar = Scrollbar(self.window, command=self.text_widget.yview) #scrollbar
