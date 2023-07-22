@@ -50,7 +50,7 @@ class Chatbot: #encapsulating
             
             self.text_widget.config(state="normal")
             self.text_widget.insert("end",f"{self.display_name}: " + "\n" + text +"\n", "right") #user chat
-            self.text_widget.insert("end", "Chatbot: " + "\n" + message_content + "\n", "left") #chatbot chat
+            self.text_widget.insert("end", "BDSC Assistant: " + "\n" + message_content + "\n", "left") #chatbot chat
             self.text_widget.tag_configure("right",justify="right")
             self.text_widget.tag_configure("left", justify="left")
             self.text_widget.config(state="disabled")
