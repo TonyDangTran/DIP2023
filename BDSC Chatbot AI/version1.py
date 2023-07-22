@@ -40,7 +40,6 @@ prompt=[{'role': 'system', 'content': 'how may I help you?'}] #this will be wher
 window = Tk() 
 window.geometry("500x750")
 window.title("BDSC Chatbot AI")
-window.resizable(False, False)
 
 canvas = tk.Canvas(window, width=50, height=50,bg="#89c9ec") #canvas for structured graphics. More usage later on. 
 canvas.pack()
