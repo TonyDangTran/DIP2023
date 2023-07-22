@@ -1,3 +1,4 @@
+from tkinter import*
 import tkinter as tk
 from tkinter import simpledialog
 import openai #openai module allows me to run a chatbot.
@@ -7,9 +8,11 @@ import key
 #main application class, core logic 
 class Chatbot: #encapsulating
     def __init__(self): #attributes
+        
         self.prompt = [{'role': 'system', 'content': 'Hi! My name\'s BDSC Assistant, a chatbot designed to help and communicate with students, parents, teachers and more to help guide their way to find information on the Botany Downs Secondary College (BDSC) Website. How may I help you?'}] 
         self.display_name = self.get_name() #runs name check 
         self.create_gui() #opens GUI afterwards 
+        
 
     def query(self, prompt): 
         openai.api_key = key.api_key #Openai API key
@@ -23,24 +26,21 @@ class Chatbot: #encapsulating
             presence_penalty=0,
         )
         return response
+    def error(self):
+            error_message = "Please enter a valid message."
+            self.text_widget.config(state='normal')
+            self.text_widget.insert("end", "BDSC Assistant:" + "\n" + error_message + "\n", "left")
+            self.text_widget.tag_configure("left", justify="left")
+            self.text_widget.config(state="disabled")
+            self.entry2.delete(0, "end")
 
     def send(self, event=None): #function that runs when you click the button widget
         text = self.entry2.get().strip()
 
         if not text:
-            error_message = "Please enter a valid message."
-            self.text_widget.config(state='normal')
-            self.text_widget.insert("end", "BDSC Assistant:" + "\n" + error_message + "\n", "left")
-            self.text_widget.tag_configure("left", justify="left")
-            self.text_widget.config(state="disabled")
-            self.entry2.delete(0, "end")
+            Chatbot.error(self)
         elif len(text) == 1:
-            error_message = "Please enter a valid message."
-            self.text_widget.config(state='normal')
-            self.text_widget.insert("end", "BDSC Assistant:" + "\n" + error_message + "\n", "left")
-            self.text_widget.tag_configure("left", justify="left")
-            self.text_widget.config(state="disabled")
-            self.entry2.delete(0, "end")
+            Chatbot.error(self)
         else:
 
             self.prompt.append({'role': 'user', 'content': text}) #uses dictionary for chatbot
@@ -57,11 +57,17 @@ class Chatbot: #encapsulating
             self.entry2.delete(0, "end")
 
     def get_name(self): #popup window that asks for user input for name
-        name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
-        return name.capitalize() #capitalizes first letter of name and lowercases the rest of the name.
+        while True:
+            name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
+            if name is not None and name.strip() != "":
+                return name.capitalize()
+
+
+                
+                
 
     def create_gui(self): #GUI
-        self.window = tk.Tk()
+        self.window = Tk()
         self.window.geometry("500x750")
         self.window.title("BDSC Chatbot AI")
         self.window.resizable(False, False) #makes window unmodifiable, keeping it at "500x750" permanently. 
@@ -94,6 +100,9 @@ class Chatbot: #encapsulating
         frame = tk.Frame(self.window)
         frame.pack()
         self.window.configure(background="#5f0137")
+
+
+  
 
     def run(self):
         self.window.mainloop()
