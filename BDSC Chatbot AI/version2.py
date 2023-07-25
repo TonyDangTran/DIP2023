@@ -60,11 +60,7 @@ class Chatbot: #encapsulating
         while True:
             name = simpledialog.askstring("Input", "Enter the name you wish to be referred as:")
             if name is not None and name.strip() != "":
-                return name.capitalize()
-
-
-                
-                
+                return name.capitalize().strip()
 
     def create_gui(self): #GUI
         self.window = Tk()

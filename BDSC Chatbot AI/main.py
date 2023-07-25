@@ -62,8 +62,6 @@ class Chatbot: #encapsulating
             if name is not None and name.strip() != "":
                 return name.capitalize()
     
-
-
     def create_gui(self):#GUI
         self.window = Tk() 
         self.window.geometry("500x750")
