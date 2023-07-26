@@ -17,13 +17,13 @@ class Chatbot: #encapsulating methods
         self.display_name = self.get_name() #runs name check dialog box.
         self.create_gui(message_content) #opens GUI afterwards. 
 
-    def faq(self):
-        faq_prompt = [{'role': 'user', 'content': 'what are some frequently answered questions about Botany Downs Secondary College (BDSC)? only 5 questions only'}]
-        response = self.query(faq_prompt)
-        message_content = response['choices'][0]['message']['content']
+    def faq(self): #frequently asked questions method
+        faq_prompt = [{'role': 'user', 'content': 'what are some frequently answered questions about Botany Downs Secondary College (BDSC)? only 5 questions only'}] #inputs this question as if user asked it
+        response = self.query(faq_prompt) #uses it as response
+        message_content = response['choices'][0]['message']['content'] #message_content is created for the chatbot
         self.prompt.append(faq_prompt[0])
-        self.prompt.append({'role': 'assistant', 'content': message_content})
-        return message_content   
+        self.prompt.append({'role': 'assistant', 'content': message_content}) #appends prompt
+        return message_content #returns value / response
 
     def query(self, prompt): 
         openai.api_key = key.api_key #Openai API key
@@ -45,15 +45,15 @@ class Chatbot: #encapsulating methods
             self.text_widget.config(state="disabled")
             self.entry2.delete(0, "end")
 
-    def save_to_csv(self, filename='conversation.csv'):
-        with open(filename, mode='w', newline='') as file:
+    def save_to_csv(self, filename='conversation.csv'): #save to external .csv file
+        with open(filename, mode='w', newline='') as file: 
             writer = csv.writer(file)
-            writer.writerow(['Role', 'Content'])  # Writing header row
+            writer.writerow(['Role', 'Content'])  
             for message in self.prompt:
-                writer.writerow([message['role'], message['content']])        
+                writer.writerow([message['role'], message['content']]) #writes message, seperates based on "role" and "content"       
 
     def send(self, event=None): #function that runs when you click the button widget
-        text = self.entry2.get().strip()
+        text = self.entry2.get().strip() #removes extra spaces from the input
 
         if not text:
             Chatbot.error(self) #if not a valid text, chatbot.error(self) method defined before will run.
@@ -65,7 +65,7 @@ class Chatbot: #encapsulating methods
             response = self.query(self.prompt) #user input
             message_content = response['choices'][0]['message']['content'] #reply by chatbot
             self.prompt.append({'role': 'assistant', 'content': message_content}) #appends reply via dictionary
-            self.save_to_csv()
+            self.save_to_csv() #saves each reply to csv
             self.text_widget.config(state="normal")
             self.text_widget.insert("end", f"{self.display_name}: " + "\n" + text + "\n" +"\n", "right") #user chat
             self.text_widget.insert("end", "BDSC Assistant: " + "\n" + message_content + "\n" + "\n", "left") #chatbot chat
@@ -75,8 +75,8 @@ class Chatbot: #encapsulating methods
             self.entry2.delete(0, "end")
 
     def get_name(self): #popup window that asks for user input for name
-        while True:
-            name = simpledialog.askstring("Input", "Enter the name you wish to be referred as. Enter Blank if you would like to remain anonymous.")
+        while True: #while true loop to keep checking for valid input
+            name = simpledialog.askstring("Input", "Enter the name you wish to be referred as. Enter Blank if you would like to remain anonymous.") #uses simpledialog to open seperate window, dialog box.
             if name is not None and name.strip() != "": #catches null inputs
                 return name.capitalize().strip()
             else:
@@ -96,19 +96,19 @@ class Chatbot: #encapsulating methods
 
         self.entry2 = tk.Entry(self.window) #user entry box
         self.entry2.place(x=6, y=320, width=420, height=25)
-        self.entry2.bind("<Return>", self.send)
-        self.entry2.insert(0,"Enter text here...")
-        self.entry2.config(fg="grey") 
-        self.entry2.bind("<FocusIn>",self.clear_placeholder)
+        self.entry2.bind("<Return>", self.send) #allows for the return/enter key to be used to send a message
+        self.entry2.insert(0,"Enter text here...") #text label in foreground to tell user to input text here
+        self.entry2.config(fg="grey") #grey to distinguish as foreground
+        self.entry2.bind("<FocusIn>",self.clear_placeholder) #when user clicks on inputbox, label will disappear.
 
         button1 = tk.Button(self.window, text='Send Msg', command=self.send) #send button, runs send method
         button1.place(anchor="se", relx=0.99, rely=0.99)
 
         self.text_widget = tk.Text(self.window, height=16, width=59, font="calibri", state="disabled") #text widget that keeps chatbot messages
         self.text_widget.place(x=7, y=6)
-        intro_message = self.prompt[0]['content']
+        intro_message = self.prompt[0]['content'] #Introduction message by chatbot
         self.text_widget.config(state="normal",wrap="word")
-        self.text_widget.insert("end", "BDSC Assistant: " + "\n" + intro_message + "\n", "left") #Introduction message by chatbot
+        self.text_widget.insert("end", "BDSC Assistant: " + "\n" + intro_message + "\n", "left") #displays intro message
         self.text_widget.insert("end", f"{faq_response}\n", "left") #faq response
         self.text_widget.tag_configure("left", justify="left")
         self.text_widget.config(state="disabled")
@@ -121,10 +121,6 @@ class Chatbot: #encapsulating methods
         frame.pack()
         self.window.configure(background="#5f0137")
 
-    def clear_placeholder(self,event):
-        if self.entry2.get() == "Enter text here...":
-            self.entry2.delete(0,"end")
-            self.entry2.config(fg='black')
 
     def run(self):
         self.window.mainloop()
