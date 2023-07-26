@@ -1,3 +1,5 @@
+#Version 1 of BDSC Chatbot AI
+#This version is the basic neccessities of the chatbot. Has a GUI window, with basic chatbot that respons to user input.
 #importations
 from tkinter import*
 import tkinter as tk
@@ -34,7 +36,7 @@ def send(event=None): #function that runs when you click the button widget
     text_widget.config(state="disabled")
     entry2.delete(0,"end")
  
-prompt=[{'role': 'system', 'content': 'how may I help you?'}] #this will be where the chatbot asks the user for their first question. Currently not implemented. 
+prompt=[{'role': 'system', 'content': 'how may I help you?'}] 
 
 #GUI
 window = Tk() 
