@@ -86,7 +86,7 @@ class Chatbot: #encapsulating methods
         self.window = Tk()
         self.window.geometry("500x350")
         self.window.title("BDSC Chatbot AI")
-        self.window.resizable(False, False) #makes window unmodifiable, keeping it at "500x750" permanently. 
+        self.window.resizable(False, False) #makes window unmodifiable, keeping it at "350x750" permanently. 
 
         canvas = tk.Canvas(self.window, width=50, height=50, bg="#89c9ec") #canvas frame to display graphics and layering.
         canvas.pack()
@@ -121,6 +121,10 @@ class Chatbot: #encapsulating methods
         frame.pack()
         self.window.configure(background="#5f0137")
 
+    def clear_placeholder(self,event):
+        if self.entry2.get() == "Enter text here...":
+            self.entry2.delete(0,"end")
+            self.entry2.config(fg='black')
 
     def run(self):
         self.window.mainloop()
