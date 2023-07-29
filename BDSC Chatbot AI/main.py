@@ -7,7 +7,7 @@ import openai #openai module allows me to run a chatbot.
 import key #API Key is imported via external file for security purposes.
 import csv 
 
-#setting up functions
+#setting up class and methods
 
 class Chatbot: #encapsulating
     def __init__(self):
@@ -54,7 +54,6 @@ class Chatbot: #encapsulating
             for message in self.prompt:
                 writer.writerow([message['role'], message['content']]) #writes message, seperates based on "role" and "content"    
         
-
     def send(self, event=None): #function that runs when you click the button widget
         text = self.entry2.get()
 
@@ -108,7 +107,6 @@ class Chatbot: #encapsulating
         self.entry2.config(fg="grey") #grey to distinguish as foreground
         self.entry2.bind("<FocusIn>",self.clear_placeholder) #when user clicks on inputbox, label will disappear.
 
-
         button1 = tk.Button(self.window, text='Send Msg', command=self.send) #send message button, runs send method
         button1.place(anchor="se", relx=0.99, rely=0.99)
 
@@ -121,7 +119,6 @@ class Chatbot: #encapsulating
         self.text_widget.tag_configure("left", justify="left")
         self.text_widget.config(state="disabled")
         
-
         scrollbar = Scrollbar(self.window, command=self.text_widget.yview) #scrollbar
         self.text_widget['yscrollcommand'] = scrollbar.set
         scrollbar.place(x=481, y=6, height = 308)
