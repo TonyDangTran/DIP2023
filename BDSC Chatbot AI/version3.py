@@ -46,7 +46,7 @@ class Chatbot: #encapsulating methods
             self.entry2.delete(0, "end")
 
     def save_to_csv(self, filename='conversation.csv'): #save to external .csv file
-        with open(filename, mode='w', newline='') as file: 
+        with open(filename, mode='w', newline='',encoding='utf-8') as file: 
             writer = csv.writer(file)
             writer.writerow(['Role', 'Content'])  
             for message in self.prompt:
