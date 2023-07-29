@@ -3,7 +3,7 @@ This project was created for the AS91906 Achievement Standard.
 BDSC Chatbot AI is a program that uses a chatbot to assist users finding information on the BDSC Website. Users may ask the chatbot via a GUI which will return information based on what users input.
 
 Table of Contents:
-main.py - Main program.
+ - main.py - Main program.
  - version1.py - first iteration of BDSC Chatbot AI
  - version2.py - second iteration of BDSC Chatbot AI
  - version3.py - third iteration of BDSC Chatbot AI
