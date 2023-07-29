@@ -17,5 +17,5 @@ main.py - Main program.
  - "api_key  = "[API KEY HERE]"
 
  -this is for security measures to not upload a secret onto github.
- -Please contact Tony (minh.dangtran@my.bdc.school.nz) for access / file for the api key, otherwise please make your own file with your own API Key.
+ - Please contact Tony (minh.dangtran@my.bdc.school.nz) for access / file for the api key, otherwise please make your own file with your own API Key.
   
