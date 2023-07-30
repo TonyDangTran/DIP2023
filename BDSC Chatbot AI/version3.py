@@ -1,4 +1,5 @@
 #Version 3 of BDSC Chatbot AI
+#This version consists of anonymity, writing to .csv file, input labels, and FAQ helper.
 #importations
 from tkinter import*
 import tkinter as tk

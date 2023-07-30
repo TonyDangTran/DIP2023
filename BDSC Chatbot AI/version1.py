@@ -1,5 +1,5 @@
 #Version 1 of BDSC Chatbot AI
-#This version is the basic neccessities of the chatbot. Has a GUI window, with basic chatbot that respons to user input.
+#This version is the basic neccessities of the chatbot. Has a GUI window, with basic chatbot that responds to user input.
 #importations
 from tkinter import*
 import tkinter as tk

@@ -1,4 +1,5 @@
 #Version 2 of BDSC Chatbot AI
+#This version consists of visual updates such as text alignment, name personalization, and cleaning errors/edge cases. 
 #importations
 from tkinter import*
 import tkinter as tk
