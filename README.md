@@ -8,6 +8,7 @@ Table of Contents:
  - version2.py - second iteration of BDSC Chatbot AI
  - version3.py - third iteration of BDSC Chatbot AI
  -conversation.csv - external .csv file which stores the conversation between user and chatbot. The file listed on this does not need to be downloaded - the program will automatically create a .csv file for you.
+- main.exe - alternative version as exectuable 
 
  -Requirements:
   -Will need some importations - 
